@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Estadísticas F1 2023 - Biografía, Circuitos, Clasificaciones, Tiempos y Análisis en tiempo real |
+    F1-Stats-2023.web.app</title>
+  <meta name="description"
+    content="Obtén las últimas noticias, resultados y estadísticas en tiempo real de la Fórmula 1 2023, incluyendo información detallada de pilotos, circuitos y equipos. Descubre las mejores estadísticas de todas las ediciones en F1-Stats-2023.web.app.">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+  <!-- Agregamos las hojas de estilo de Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <!-- Agregamos nuestro archivo de estilos personalizado -->
+  <link rel="stylesheet" href="../styles/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="./index.html">F1 Stats
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="./index.html">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./stats2023.html">Stats</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Resultados</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pilotos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Equipos</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <canvas class="chartjs-render-monitor graphic" id="miGrafico"></canvas>
+        </div>
+      </div>
+
+
+    </div>
+
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-analytics.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyA0dIEdXw7q5wrOCy5jBSVqGypylfB0m0I",
+        authDomain: "f1-stats-65bf4.firebaseapp.com",
+        projectId: "f1-stats-65bf4",
+        storageBucket: "f1-stats-65bf4.appspot.com",
+        messagingSenderId: "408705487962",
+        appId: "1:408705487962:web:b9568eb1d5f11c16227463",
+        measurementId: "G-K51VR3LT2M"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+    </script>
+  </body>
+  <!-- Footer -->
+  <footer class="bg-dark text-light py-3">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6">
+          <p>© 2023 F1 STATS. Todos los derechos reservados.</p>
+        </div>
+        <div class="col-sm-6">
+          <ul class="list-inline text-right">
+            <li class="list-inline-item"><a href="#">Inicio</a></li>
+            <li class="list-inline-item"><a href="./stats2023.html">Stats</a></li>
+            <li class="list-inline-item"><a href="#">Resultados</a></li>
+            <li class="list-inline-item"><a href="#">Pilotos</a></li>
+            <li class="list-inline-item"><a href="#">Equipos</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Agregamos los scripts de jQuery y Bootstrap -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+  <script>
+
+    async function processAllTimeLapsFromCircuit() {
+      const laps = [];
+      let haveLaps = true;
+      let i = 1;
+
+      while (haveLaps) {
+        const lapData = await getTimeLapFromCircuit(2023, 1, i);
+        if (lapData == false) {
+          haveLaps = false;
+          break;
+        }
+
+        lapData.forEach(element => {
+          const pilotoIndex = laps.findIndex(piloto => piloto.nombre === element.nombre);
+          const pilotoCount = 10;
+          if (pilotoIndex === -1 && (laps.length < pilotoCount)) {
+            const nuevoPiloto = {
+              nombre: element.nombre,
+              vueltas: []
+            };
+            nuevoPiloto.vueltas.push(element.vuelta);
+            laps.push(nuevoPiloto);
+            console.log(laps);
+          } else if (pilotoIndex != -1) {
+            laps[pilotoIndex].vueltas.push(element.vuelta);
+          }
+        });
+
+        i++;
+      }
+
+      console.log(laps);
+      return laps;
+    }
+
+
+    async function getTimeLapFromCircuit(year, numberRace, lap) {
+      const pilotos = [];
+
+      const response = await fetch('https://ergast.com/api/f1/' + year + '/' + numberRace + '/laps/' + lap + '.json');
+      const data = await response.json();
+      if (data.MRData.RaceTable.Races.length == 0) {
+        return false;
+      }
+      else {
+        data.MRData.RaceTable.Races[0].Laps[0].Timings.forEach(lap => {
+          const piloto = pilotos.find(p => p.nombre === lap.driverId);
+
+          if (!piloto) {
+            pilotos.push({
+              nombre: lap.driverId,
+              vuelta: parserToDate(lap.time)
+            });
+          } else {
+            piloto.vuelta = parserToDate(lap.time);
+          }
+        });
+        return pilotos;
+      }
+
+
+    }
+
+    async function createChart() {
+      try {
+        const data = await processAllTimeLapsFromCircuit();
+        const labels = [];
+        const datasets = [];
+        data.forEach((piloto) => {
+          const dataset = {
+            label: piloto.nombre,
+            data: piloto.vueltas,
+            borderColor: getRandomColor(),
+            fill: false,
+          };
+          datasets.push(dataset);
+          console.log(datasets);
+        });
+        const ctx = document.getElementById('miGrafico').getContext('2d');
+        const myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: getLabels(data[0].vueltas),
+            datasets: datasets,
+          },
+          options: {
+            scales: {
+              yAxes: [{
+                type: 'time',
+                ticks: {
+                  source: 'auto',
+                  // Disabled rotation for performance
+                  maxRotation: 0,
+                  autoSkip: true,
+                }
+              }]
+            },
+          },
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    function getLabels(vueltas) {
+      const labels = [];
+      for (let i = 1; i <= vueltas.length; i++) {
+        labels.push(`Vuelta ${i}`);
+      }
+      return labels;
+    }
+
+    function parserToDate(dateString) {
+      const duracionStrin = dateString.split(/:|\./);
+      const minutos = parseInt(duracionStrin[0]);
+      const segundos = parseFloat(duracionStrin[1]);
+      const mili = parseFloat(duracionStrin[2]);
+      const duracionEnSegundos = (minutos * 60) + segundos + (mili / 1000);
+      return duracionEnSegundos;
+    }
+
+
+
+
+    createChart();
+  </script>

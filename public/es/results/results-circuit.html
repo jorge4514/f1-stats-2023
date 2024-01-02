@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <title>Información del circuito de F1</title>
+  <!-- Enlace a Bootstrap CSS -->
+  <link rel="stylesheet" href="../../styles/style.css">
+	<link rel="stylesheet" href="../../styles/results.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<style>
+  .page-container {
+    margin-top: 100px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    background-color: #dadada;
+    border-radius: 10px;
+    border: 1px solid #898989;
+    padding: 18px;
+  }
+
+  .page-container h2 {
+    margin-bottom: 0;
+  }
+
+  .page-container span {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .flag-container {
+    margin-left: 500px;
+  }
+
+  .country-image {
+    width: 150px;
+    height: 100%;
+  }
+</style>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow">
+    <a class="navbar-brand " href="../index.html">
+      <div class="d-flex align-items-center">
+        <img src="../../img/icon-1.png" style="width: 80px; height: 60px;">
+      </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse mx-3" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="../index.html">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./results.html">Resultados</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./results-view.html">Programación</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../stats/stats2023.html">Estadísticas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../drivers/drivers.html">Pilotos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Equipos</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="twitter-widget twitter-widget-header">
+    <button onclick="toggleTwitterWidget()">▼</button>
+    <a class="twitter-timeline span-twitter" href="https://twitter.com/alonsoIngenier0?ref_src=twsrc%5Etfw">Tweets by
+      el ingeniero de alonso</a>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+  </div>
+  <div class="twitter-widget-minimize" onclick="toggleTwitterWidget()">
+    <div class="twitter-widget-header">
+      <img src="https://abs.twimg.com/icons/apple-touch-icon-192x192.png" alt="Twitter logo" width="24" height="24">
+      <span class="span-twitter">Tweets by @alonsoIngenier0</span>
+      <button onclick="toggleTwitterWidget()">▲</button>
+    </div>
+  </div>
+
+  <script>
+    function toggleTwitterWidget() {
+      var widget = document.querySelector('.twitter-widget');
+      var widget_minimize = document.querySelector('.twitter-widget-minimize');
+      if (widget.style.display === 'none') {
+        widget_minimize.style.display = 'none';
+        widget.style.display = 'block';
+      } else {
+        widget_minimize.style.display = 'block';
+        widget.style.display = 'none';
+      }
+    }
+  </script>
+
+  <style>
+    .span-twitter {
+      font-size: 14px;
+      font-weight: bold;
+      font-family: 'Formula1-Regular';
+    }
+
+    @media(max-width: 768px) {
+      .twitter-widget.twitter-widget-header {
+        display: none;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .twitter-widget-header button {
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+        font-size: large;
+        line-height: normal;
+        text-align: center;
+        cursor: pointer;
+        transition-duration: .2s;
+        position: absolute;
+        top: 0;
+        right: 0px;
+      }
+
+      .twitter-widget-minimize {
+        background-color: rgb(255, 255, 255);
+        display: none;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        z-index: 9999;
+        box-shadow: 0px 0px 10px black;
+        width: 400px;
+        height: 30px;
+        overflow-y: scroll;
+        border-radius: 10px 10px 0px 0px;
+      }
+
+      .twitter-widget {
+        position: fixed;
+        bottom: 0;
+        right: 10px;
+        z-index: 9999;
+        box-shadow: 0px 0px 10px black;
+        width: 400px;
+        height: 350px;
+        overflow-y: scroll;
+        border-radius: 10px 10px 0px 0px;
+
+      }
+
+      .twitter-widget iframe {
+        border-radius: 10px 10px 0px 0px;
+        overflow-y: scroll !important;
+        -webkit-overflow-scrolling: touch !important;
+        height: calc(100% - 20px);
+        width: calc(100% - 20px);
+        border: none !important;
+
+      }
+
+      ::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  </style>
+  <div class="container">
+    <div id="info-circuito"></div>
+    <div id="resultados-carrera"></div>
+  </div>
+  <!-- Enlace a Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <!-- Enlace a nuestro archivo JS -->
+  <script src="script.js"></script>
+</body>
+
+</html>

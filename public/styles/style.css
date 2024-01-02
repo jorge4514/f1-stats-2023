@@ -1,0 +1,395 @@
+@font-face {
+  font-family: 'Formula1-Regular';
+  src: url('./fonts/Formula1-Regular.ttf') format('truetype');
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Raleway:ital,wght@0,200;0,300;1,600&family=Roboto:ital,wght@0,400;0,700;1,400&family=Wix+Madefor+Display:wght@700&display=swap?family=Montserrat&display=swap');
+
+@media (min-width: 768px) {
+  :root {
+    scroll-padding-top: 4rem
+  }
+}
+
+
+body {
+  background-color: #E9ECEF;
+  color: #343A40;
+}
+
+/* Estilizamos el título principal de la página */
+h1 {
+  font-size: 3rem;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.lead {
+  text-align: justify;
+}
+
+
+
+/* Estilizamos los enlaces de la barra de navegación */
+.navbar-nav a {
+  color: #6C757D;
+}
+
+/* Cambiamos el color de fondo de la barra de navegación */
+.navbar {
+  z-index: 2 !important;
+  background-color: #343A40;
+}
+
+/* Cambiamos el color de fondo y el tamaño de fuente del pie de página */
+footer {
+  background-color: #343A40;
+  color: #FFFFFF;
+}
+
+/* Estilizamos los enlaces en el pie de página */
+footer a {
+  color: #FFFFFF;
+}
+
+/* Cambiamos el color de fondo y el color de fuente del botón de navegación */
+.navbar-toggler {
+  background-color: #FFFFFF;
+  color: #343A40;
+}
+
+/* Agregamos un estilo atractivo a los enlaces de la lista en línea */
+.list-inline-item a {
+  color: #FFFFFF;
+  text-decoration: none;
+  transition: border-bottom 0.3s ease;
+}
+
+.list-inline-item a:hover {
+  color: #d60e0e;
+}
+
+body {
+  background-color: #fff;
+  color: #000;
+}
+
+.navbar {
+  background-color: #fff;
+  color: #000;
+}
+
+.navbar-nav .nav-link {
+  color: #000;
+}
+
+footer {
+  background-color: #000;
+  color: #fff;
+}
+
+/* Estilos para la gráfica */
+#miGrafico {
+  background-color: #000;
+  color: #fff;
+}
+
+.container-fluid {
+  border: 1px solid #CED4DA;
+  padding: 2rem;
+  background-color: transparent;
+  margin-bottom: 10px;
+}
+
+body {}
+
+.navbar {
+  font-family: 'Formula1-Regular', sans-serif;
+  background-color: #ffffff !important;
+  color: rgb(118, 118, 118) !important;
+  transition: all 0.3s;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: #515151;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: #8d8d8d;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+  color: #ff3f3f;
+}
+
+.fixed-top {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+@media (max-width: 767px) {
+  .navbar {
+    background-color: #f2f2f2 !important;
+  }
+}
+
+.logo-text {
+  font-family: 'Arial', sans-serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #dc3545;
+  margin: 0;
+}
+
+.hero {
+  margin-top: 86px;
+  background-color: #06072d;
+  border: none !important;
+  color: white;
+}
+
+.first-container {
+  border: none;
+}
+
+.shadow {
+  box-shadow: 0 .15rem 1.75rem 0 rgba(33, 40, 50, .15) !important;
+}
+
+.destacados a {
+  text-decoration: none;
+
+}
+
+.destacados {
+  overflow: hidden;
+}
+
+#gp-title {
+  font-family: 'Montserrat', sans-serif;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 25px;
+}
+
+.flag-container-circuit {
+  margin-right: 20px;
+  margin-left: 5px;
+}
+
+
+.add-margin {
+  margin-top: 14px;
+}
+
+.carousel-control-next,
+.carousel-control-prev
+
+/*, .carousel-indicators */
+  {
+  filter: invert(100%);
+}
+
+#carouselDestacados {
+  margin-top: 20px;
+}
+
+.gp-title {
+  color: #343A40;
+}
+
+.country-image {
+  width: 40px;
+}
+
+.title-one {
+  font-family: 'Formula1-Regular';
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 0px 0px rgb(0, 0, 0),
+    0px 2px 0px rgb(0, 0, 0),
+    -2px 0px 0px rgb(0, 0, 0),
+    0px -2px 0px rgb(0, 0, 0);
+  font-size: 55px;
+}
+
+.parrafo-main {
+  font-weight: 400;
+}
+
+.country-horari {
+  width: 20px;
+  margin-left: 5px;
+}
+
+.session-date {
+  font-family: 'Formula1-Regular';
+  font-size: 17px;
+  color: #ffffff;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@1,600&display=swap');
+
+.country-weather {
+  width: 45px;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.country-weather-wind {
+  width: 25px;
+  margin-right: 5px;
+}
+
+.circuit-image {
+  margin-top: 60px;
+}
+
+.gp-flag-span {
+  height: 100px;
+  display: flex;
+}
+
+#name-circuit {
+  font-family: 'Formula1-Regular';
+  font-weight: bold;
+  font-size: 24px;
+  color: #000;
+}
+
+#gp-flag-span {
+  color: #ffffff;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  text-shadow: 1px 1px 1px #8a8a8a;
+  background-color: #628191;
+  padding: 10px;
+  border-radius: 5px 5px 0px 0px;
+}
+
+.main-container-next-gp {
+  color: #000000;
+  margin-bottom: 3px;
+  margin-left: 35px;
+  font-style: italic;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+}
+
+#carouselNoticias .carousel-item img {
+  max-height: 200px;
+  object-fit: cover;
+}
+
+.card-text {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+}
+
+.a-without {
+  text-decoration: none;
+  cursor: pointer;
+  color: #000;
+}
+
+.hr-proximo-gp {
+  color: black;
+  margin-top: -5px;
+  width: 96px;
+  margin-left: 31px;
+  float: left;
+  opacity: 0.75;
+  margin-bottom: -5px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap');
+
+.table-container-horario {
+  background-color: #628191;
+  border-radius: 0px 0px 20px 20px;
+}
+
+#tabla-horari {
+  font-style: italic;
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  color: white;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+#tabla-horari td,
+#tabla-horari th {
+  border: 3px solid #f2f2f2;
+  border-right: 0px;
+  border-left: 0px;
+  padding: 8px;
+}
+
+#tabla-horari td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+
+#tabla-horari th {
+  background-color: #f2f2f2;
+  color: black;
+}
+
+/* Add some styles to the #count-down element */
+#count-down {
+  font-family: 'Formula1-Regular';
+  font-size: 50px;
+  text-align: center;
+}
+
+/* Add some styles to the #circuit-name element */
+#circuit-name1 {
+  font-family: 'Formula1-Regular';
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.flag-count-down {
+  width: 40px;
+  margin-left: 10px;
+  margin-bottom: 5px;
+}
+
+.flip-clock-label {
+  display: none;
+}
+
+div.shadow {
+  opacity: 0.4;
+}
+
+.countdown-container1{
+  z-index: 1 !important;
+}
+
+.flip-clock-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 1600px) {
+  .flip-clock-wrapper {
+    zoom: 0.6;
+    -moz-transform: scale(0.6)
+  }  
+}
+
+@media (max-width: 1000px) {
+  .flip-clock-wrapper {
+    zoom: 0.4;
+    -moz-transform: scale(0.4)
+  }  
+}
+

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>F1 2023: Pilotos, clasificaciones y horarios en directo</title>
+  <meta name="description"
+    content="Ultimas noticias, horarios y estadísticas en directo de F1. Información detallada de pilotos, clasificaciones, circuitos y equipos en f1-stats-2023.web.app">
+
+  <link rel="shortcut icon" href="../favicon/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="../favicon/favicon.ico" type="image/x-icon">
+  <link rel="alternate" href="https://www.f1-stats-2023.web.app/es/index.html" hreflang="es" />
+  <link rel="alternate" href="https://www.f1-stats-2023.web.app/en/index.html" hreflang="en" />
+  <meta name="keywords" content="Fórmula 1, estadísticas, 2023, carreras, pilotos, equipos, horarios, clasificaciones">
+
+
+  <!-- Agregamos las hojas de estilo de Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <!-- Agregamos nuestro archivo de estilos personalizado -->
+  <link rel="stylesheet" href="./styles/style.css">
+  <link rel="stylesheet" href="./styles/drivers.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <script src="https://momentjs.com/downloads/moment-timezone-with-data.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flipclock/0.7.8/flipclock.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flipclock/0.7.8/flipclock.min.js"></script>
+  <script src="./script/getTimeAndCircuit.js"></script>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow">
+    <a class="navbar-brand " href="./index.html">
+      <div class="d-flex align-items-center">
+        <img src="./img/icon-1.png" style="width: 80px; height: 60px;">
+      </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse mx-3" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="./index.html">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./es/results/results.html">Resultados</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./es/results/results-view.html">Programación</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./es/stats/stats2023.html">Estadísticas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./es/drivers/drivers.html">Pilotos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Equipos</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="twitter-widget twitter-widget-header">
+    <button onclick="toggleTwitterWidget()">▼</button>
+    <a class="twitter-timeline span-twitter" href="https://twitter.com/alonsoIngenier0?ref_src=twsrc%5Etfw">Tweets by
+      el ingeniero de alonso</a>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+  </div>
+  <div class="twitter-widget-minimize" onclick="toggleTwitterWidget()">
+    <div class="twitter-widget-header">
+      <img src="https://abs.twimg.com/icons/apple-touch-icon-192x192.png" alt="Twitter logo" width="24" height="24">
+      <span class="span-twitter">Tweets by @alonsoIngenier0</span>
+      <button onclick="toggleTwitterWidget()">▲</button>
+    </div>
+  </div>
+
+  <script>
+    function toggleTwitterWidget() {
+      var widget = document.querySelector('.twitter-widget');
+      var widget_minimize = document.querySelector('.twitter-widget-minimize');
+      if (widget.style.display === 'none') {
+        widget_minimize.style.display = 'none';
+        widget.style.display = 'block';
+      } else {
+        widget_minimize.style.display = 'block';
+        widget.style.display = 'none';
+      }
+    }
+  </script>
+
+  <style>
+    .span-twitter {
+      font-size: 14px;
+      font-weight: bold;
+      font-family: 'Formula1-Regular';
+    }
+
+    @media (max-width: 768px) {
+      .twitter-widget {
+        display: none;
+      }
+    }
+
+
+    @media (min-width: 768px) {
+      .twitter-widget-header button {
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+        font-size: large;
+        line-height: normal;
+        text-align: center;
+        cursor: pointer;
+        transition-duration: .2s;
+        position: absolute;
+        top: 0;
+        right: 0px;
+      }
+
+      .twitter-widget-minimize {
+        background-color: rgb(255, 255, 255);
+        display: none;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        z-index: 9999;
+        box-shadow: 0px 0px 10px black;
+        width: 400px;
+        height: 30px;
+        overflow-y: scroll;
+        border-radius: 10px 10px 0px 0px;
+      }
+
+      .twitter-widget {
+        position: fixed;
+        bottom: 0;
+        right: 10px;
+        z-index: 9999;
+        box-shadow: 0px 0px 10px black;
+        width: 400px;
+        height: 350px;
+        overflow-y: scroll;
+        border-radius: 10px 10px 0px 0px;
+
+      }
+
+      .twitter-widget iframe {
+        border-radius: 10px 10px 0px 0px;
+        overflow-y: scroll !important;
+        -webkit-overflow-scrolling: touch !important;
+        height: calc(100% - 20px);
+        width: calc(100% - 20px);
+        border: none !important;
+
+      }
+
+      ::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  </style>
+  <!-- Hero section -->
+  <section class="hero">
+    <div class="container-fluid first-container">
+      <div class="row align-items-center">
+        <div class="col-md-1 mt-4 mt-md-0"></div>
+        <div class="col-md-4 text-center text-md-start"
+          style="background-image: url('./img/wheels.png'); background-size: 300px auto; background-position: right bottom; background-repeat: no-repeat;">
+          <h1 class="title-one display-4 mb-3">F1 STATS 2023</h1>
+          <p class="lead mb-4 parrafo-main">Estadísticas de la Fórmula 1. Obtén información en tiempo real sobre
+            tus pilotos y equipos favoritos, revisa los resultados de las carreras y sigue la temporada de F1 al
+            detalle.</p>
+          <div class="text-center"><a href="./stats/stats-menu.html" class="btn btn-primary btn-lg stats-button">Ver
+              estadísticas</a></div>
+        </div>
+        <div class="col-md-2 mt-4 mt-md-0"></div>
+        <div class="col-md-4 mt-4 countdown-container1">
+          <!-- Add the #circuit-name element here -->
+          <div style="text-align: center;"><span id="circuit-name1"></span><img class="flag-count-down"></img></div>
+          <div id="countdown"></div>
+        </div>
+      </div>
+  </section>
+  <div class="container-fluid">
+    <div class="card race-circuit">
+      <div class="card-body">
+        <div class="gp-header">
+          <div class="row">
+            <div class="col-md-4">
+              <div id="gp-flag-span" class="col-md-12">
+                <div class="main-container-next-gp">Próximo GP</div>
+                <hr class="hr-proximo-gp">
+                <div class="col-md-10  d-flex align-items-center mb-2">
+                  <div class="flag-container-circuit">
+                    <img id="gp-flag" class="image-gp country-image me-2">
+                  </div>
+                  <div>
+                    <div id="gp-title"></div>
+                    <div id="date-gp"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="table-container-horario col-md-12">
+                <table id="tabla-horari" class="table table-sm table-borderless">
+                  <thead>
+                  </thead>
+                  <tbody>
+                    <!-- Crear una fila por cada sesión -->
+                    <tr>
+                      <td></td> <!-- Dejar las celdas vacías -->
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col text-center">
+              <div id="name-circuit"></div>
+              <img id="circuit-image" class="circuit-image img-fluid">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Destacados section -->
+  <section class="destacados">
+    <div class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
+      <div class="destacados-title"
+        style="display: flex; align-items: center; justify-content: center;margin-bottom: 25px;">
+        <h2 class="text-center mb-0 me-4">Pilotos 2023</h2>
+        <img src="./img/helmet.gif" style="height: 4em; width: auto;" class="helmet">
+      </div>
+      <div id="carouselDestacados" class="carousel slide" data-interval="false" data-wrap="true">
+        <div class="carousel-inner">
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselDestacados" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselDestacados" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Siguiente</span>
+        </button>
+      </div>
+    </div>
+  </section>
+  <script>
+    let carousel = document.querySelector('#carouselDestacados');
+    carousel.addEventListener('slide.bs.carousel', function (event) {
+      let currentSlide = event.relatedTarget;
+      let driverAnimations = currentSlide.querySelectorAll('.driver-animation');
+      for (let i = 0; i < driverAnimations.length; i++) {
+        let driverAnimation = driverAnimations[i];
+        let driverId = driverAnimation.id.split('-')[0];
+        driverAnimation.src = `./img/gif-drivers/${driverId}1.gif`;
+      }
+    });
+    fetch('https://ergast.com/api/f1/2023/driverStandings.json')
+      .then(response => response.json())
+      .then(data => {
+        const drivers = data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
+        let carouselInner = document.querySelector('.carousel-inner');
+        let carouselItem = document.createElement('div');
+        carouselItem.classList.add('carousel-item');
+        if (drivers.length > 0) {
+          carouselItem.classList.add('active');
+        }
+        let row = document.createElement('div');
+        row.classList.add('row', 'align-items-center', 'justify-content-center', 'add-margin');
+        for (let i = 0; i < drivers.length; i++) {
+          if (i % 3 === 0 && i !== 0) {
+            carouselItem.appendChild(row);
+            carouselInner.appendChild(carouselItem);
+            carouselItem = document.createElement('div');
+            carouselItem.classList.add('carousel-item');
+            row = document.createElement('div');
+            row.classList.add('row', 'align-items-center', 'justify-content-center');
+          }
+          let driver = drivers[i];
+          let col = document.createElement('div');
+          col.classList.add('col-sm-3');
+          let driverId = driver.Driver.driverId;
+          let givenName = driver.Driver.givenName;
+          let familyName = driver.Driver.familyName;
+          col.innerHTML = `<a href="./drivers/drivers.html?driverId=${driverId}">
+                        <div class="card mb-4">
+                          <img src="./img/drivers-images/${driverId}.png" alt="Imagen de ${givenName} ${familyName}" class="card-img-top driver">
+                          <img src="./img/gif-drivers/${driverId}1.gif" id="${driverId}-gif" class="card-img-top driver-animation">
+                          <div class="card-body">
+                            <h5 class="card-title mb-0">${givenName} ${familyName}</h5>
+                            <p class="card-text">Piloto de ${driver.Constructors[0].name}</p>
+                          </div>
+                        </div>
+                      </a>`;
+          row.appendChild(col);
+        }
+        carouselItem.appendChild(row);
+        carouselInner.appendChild(carouselItem);
+      });
+  </script>
+
+  <!-- Sección de estadísticas -->
+  <section class="container-fluid mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-7">
+        <div id="carouselExampleControls" class="carousel slide row" data-interval="false" data-wrap="true">
+          <div class="carousel-inner col-md-2">
+            <div class="carousel-item active">
+              <h2 class="text-center mb-4" id="stats-title"></h2>
+              <canvas id="chart1"></canvas>
+            </div>
+            <div class="carousel-item">
+              <h2 class="text-center mb-4" id="stats-title2"></h2>
+              <canvas id="chart2"></canvas>
+            </div>
+            <div class="carousel-item">
+              <h2 class="text-center mb-4" id="stats-title"></h2>
+              <canvas id="chart3"></canvas>
+            </div>
+          </div>
+          <button class="carousel-control-prev me-auto col-md-2" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next ms-auto col-md-2" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script src="./es/js/getRacePace.js"></script>
+  <script src="./es/js/getQualy.js"></script>
+  <script src="./es/js/getWithoutWin.js"></script>
+  <!-- Sección de noticias -->
+  <section class="container-fluid mt-5">
+    <h2 class="text-center mb-4">Últimas noticias</h2>
+    <div id="carouselNoticias" class="carousel slide" data-interval="false" data-wrap="true">
+      <div class="carousel-inner" id="carousel-identigier">
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselNoticias" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselNoticias" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+      </button>
+    </div>
+  </section>
+  <script>
+    const newsdataApiKey = 'pub_19846ec131d19a7875f07d65be2db2bc40e9f';
+    fetch(`https://newsdata.io/api/1/news?apikey=${newsdataApiKey}&q=f1&language=es&category=sports`)
+      .then(response => response.json())
+      .then(data => {
+        let firstItemAdded = false;
+        let carouselInner = document.getElementById('carousel-identigier');
+        let articlesWithImage = data.results.filter(article => article.image_url);
+        let articlesWithoutImage = data.results.filter(article => !article.image_url);
+        let sortedArticles = [...articlesWithImage, ...articlesWithoutImage];
+        for (let i = 0; i < sortedArticles.length; i += 3) {
+          const carouselItem = document.createElement('div');
+          carouselItem.classList.add('carousel-item');
+          if (!firstItemAdded) {
+            carouselItem.classList.add('active');
+            firstItemAdded = true;
+          }
+          let row = document.createElement('div');
+          row.classList.add('row', 'align-items-center', 'justify-content-center', 'add-margin');
+          for (let j = i; j < i + 3 && j < sortedArticles.length; j++) {
+            let article = sortedArticles[j];
+            let col = document.createElement('div');
+            col.classList.add('col-sm-3');
+            let card = document.createElement('div');
+            card.classList.add('card');
+            if (article.image_url) {
+              card.innerHTML = `<a class="a-without" href="${article.link}">
+            <img src="${article.image_url}" class="card-img-top" alt="${article.title}">
+            <div class="card-body">
+              <h5 class="card-title">${article.title}</h5>
+              <p class="card-text">${article.description}</p>
+            </div></a>
+          `;
+            } else {
+              card.innerHTML = `<a class="a-without" href="${article.link}">
+            <div class="card-body">
+              <h5 class="card-title">${article.title}</h5>
+              <p class="card-text">${article.description}</p>
+            </div></a>
+          `;
+            }
+            col.appendChild(card);
+            row.appendChild(col);
+          }
+          carouselItem.appendChild(row);
+          carouselInner.appendChild(carouselItem);
+        }
+      });
+  </script>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-analytics.js";
+    import { getDatabase, ref, set, child, update, remove, onValue } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyDZvikZXcqfejlRDQSim3AxGDN6mINaZ9w",
+      authDomain: "f1-stats-2023.firebaseapp.com",
+      projectId: "f1-stats-2023",
+      storageBucket: "f1-stats-2023.appspot.com",
+      messagingSenderId: "824923788276",
+      appId: "1:824923788276:web:7f5c7a8974f3741a279fa1",
+      measurementId: "G-3XJYD97R5F"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+
+
+  </script>
+</body>
+<!-- Footer -->
+<footer class="bg-dark text-light py-3">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6">
+        <p>© 2023 F1 STATS. Todos los derechos reservados. Powered by Ergast.</p>
+      </div>
+      <div class="col-sm-6">
+        <ul class="list-inline text-right">
+          <li class="list-inline-item"><a href="#">Inicio</a></li>
+          <li class="list-inline-item"><a href="./stats2023.html">Stats</a></li>
+          <li class="list-inline-item"><a href="#">Resultados</a></li>
+          <li class="list-inline-item"><a href="#">Pilotos</a></li>
+          <li class="list-inline-item"><a href="#">Equipos</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Agregamos los scripts de jQuery y Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>

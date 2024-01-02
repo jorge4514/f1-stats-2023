@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Pilotos F1 2023: Clasificación, victorias y noticias</title>
+  <meta name="description"
+    content="Obtén lo último sobre los pilotos de F1 en 2023, incluyendo clasificaciones, victorias, estadísticas y noticias de última hora | f1-stats-2023">
+  <link rel="shortcut icon" href="../favicon/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="../favicon/favicon.ico" type="image/x-icon">
+  <meta name="keywords" content="Fórmula 1, estadísticas, 2023, carreras, pilotos, equipos, horarios, clasificaciones">
+  <!-- Agregamos las hojas de estilo de Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <!-- Agregamos nuestro archivo de estilos personalizado -->
+  <link rel="stylesheet" href="../../styles/stats.css">
+  <link rel="stylesheet" href="../../styles/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow">
+    <a class="navbar-brand " href="../index.html">
+      <div class="d-flex align-items-center">
+        <img src="../../img/icon-1.png" style="width: 80px; height: 60px;">
+      </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="../index.html">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Resultados</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../stats/stats.html">Estadísticas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pilotos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Equipos</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <body>
+    <!-- Agrega un contenedor para la información del piloto -->
+    <section class="hero1" id="hero-container">
+      <div class="container-fluid my-4 driver-info-container" style="margin-bottom: 0px !important;">
+        <div class="row">
+          <div class="col-sm-3">
+            <img id="driver-image" class="img-fluid rounded driver-image" alt="Imagen del piloto" />
+            <img id="helmet-image" class="img-fluid rounded helmet-image" alt="helmet " />
+          </div>
+          <div class="col-sm-6">
+            <h2 id="name"></h2>
+            <div>
+              <h5 id="age"></h5>
+              <h5 id="nationality"></h5>
+              <a id="code-link" target="_blank">
+                <h5 id="code"></h5>
+              </a>
+              <div class="driver-stats" id="driver-stats">
+                <p id="text-vic" style="font-size: 18px; border: 1px solid rgb(255, 255, 255); padding: 10px; border-radius: 10px; font-family: 'Formula1-Regular', sans-serif; background-color: rgba(118, 118, 118, 0.789);"></p>
+              </div>
+            </div>
+            <br>
+            <div class="py-1">
+              <h3 style="text-align: center;">Clasificación del piloto 2023</h3>
+              <div class="card">
+                <div class="card-body">
+                  <canvas id="positionGraphic"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid" style="border:none;padding:0px;">
+        <div class="row">
+          <div id="circuit-result" class="col-12 overflow-auto" style="max-height: 300px;">
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid" style="border:none;padding:0px;">
+        <div class="row">
+          <div class="col-12 overflow-auto" style="max-height: 500px;">
+            <table class="table table-striped table-bordered table-dark">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Posición</th>
+                  <th scope="col">Piloto</th>
+                  <th scope="col">Victorias</th>
+                  <th scope="col">Fabricante</th>
+                  <th scope="col">Puntos</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td id="pos"></td>
+                  <td id="piloto"></td>
+                  <td id="victorias"></td>
+                  <td id="fabricante"></td>
+                  <td id="puntos"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </section class="last-gp-stats">
+    <div class="container-fluid" style="border:none;padding:0px;">
+      <div id="chart-name" class="chart-name"></div>
+      <canvas id="last-gp-times"></canvas>
+      <div class="card">
+        <div class="card-body">
+          <div id="average-time-container" class="container-lap-legend">
+            <span>Tiempo medio: </span>
+            <span id="average-time"></span>
+            <span><img class="icon-class" src="../../img/icons/time-average.webp"></span>
+          </div>
+          <div id="fast-lap-container" class="container-lap-legend">
+            <span>Vuelta rápida: </span>
+            <span id="fast-time"></span>
+            <span><img class="icon-class1" src="../../img/icons/fast-lap.png"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../js/getWithoutWin.js">
+    </script>
+    <script>
+      const urlParams1 = new URLSearchParams(window.location.search);
+      const driverId2 = urlParams1.get('driverId');
+      console.log(driverId2);
+      print_time_since_last_win_or_podium(driverId2, driverId2)
+        .then(result => {
+          document.getElementById('text-vic').innerHTML = result;
+        });
+    </script>
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-analytics.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyDZvikZXcqfejlRDQSim3AxGDN6mINaZ9w",
+        authDomain: "f1-stats-2023.firebaseapp.com",
+        projectId: "f1-stats-2023",
+        storageBucket: "f1-stats-2023.appspot.com",
+        messagingSenderId: "824923788276",
+        appId: "1:824923788276:web:7f5c7a8974f3741a279fa1",
+        measurementId: "G-3XJYD97R5F"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+    </script>
+  </body>
+  <!-- Footer -->
+  <footer class="bg-dark text-light py-3">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6">
+          <p>© 2023 F1 STATS. Todos los derechos reservados.</p>
+        </div>
+        <div class="col-sm-6">
+          <ul class="list-inline text-right">
+            <li class="list-inline-item"><a href="#">Inicio</a></li>
+            <li class="list-inline-item"><a href="./stats2023.html">Stats</a></li>
+            <li class="list-inline-item"><a href="#">Resultados</a></li>
+            <li class="list-inline-item"><a href="#">Pilotos</a></li>
+            <li class="list-inline-item"><a href="#">Equipos</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const driverId = urlParams.get('driverId');
+    let driverColorSelected = '';
+    let partes = driverId.split("_");
+    const driverIdFilter = partes[1];
+    document.getElementById("driver-image").src = "../../img/drivers-images/" + driverId + ".png";
+    if (driverIdFilter == undefined) {
+      document.getElementById('helmet-image').src = 'https://media.formula1.com/content/dam/fom-website/manual/Helmets2023/' + driverId + '.png';
+    }
+    else {
+      document.getElementById('helmet-image').src = 'https://media.formula1.com/content/dam/fom-website/manual/Helmets2023/' + driverIdFilter + '.png';
+    }
+
+    putDataInHtml();
+    getCircuitsInfo(2023);
+    getLastLapTimes('current', 'last');
+
+    async function putDataInHtml() {
+      let driverStading = await driverStandings();
+      await processDataToCanvas(driverStading);
+      var info = await getDriverInfo(driverId);
+      document.getElementById("name").innerHTML = info.permanentNumber + '.  ' + info.givenName + ' ' + info.familyName;
+      document.getElementById('age').innerHTML = getAge(info.dateOfBirth) + ' years';
+      document.getElementById('nationality').innerHTML = info.nationality;
+      document.getElementById('code').innerHTML = '[' + info.code + ']🡥';
+      document.getElementById('code-link').href = info.url;
+    }
+
+    async function getLastLapTimes(season, round) {
+
+      let laps = [];
+      let limit = 30;
+      let offset = 0;
+      let totalLaps = Infinity;
+      var canvas_name = document.getElementById('chart-name');
+      let data = '';
+
+      while (laps.length < totalLaps) {
+        let response = await fetch(`https://ergast.com/api/f1/${season}/${round}/drivers/${driverId}/laps.json?limit=${limit}&offset=${offset}`);
+        data = await response.json();
+        laps = laps.concat(data.MRData.RaceTable.Races[0].Laps);
+        totalLaps = parseInt(data.MRData.total);
+        offset += limit;
+      }
+      let img = document.createElement('img');
+      img.src = 'https://cdn.countryflags.com/thumbs/' + data.MRData.RaceTable.Races[0].Circuit.Location.country.toLowerCase().replace(/ /g, '-') + '/flag-400.png';
+      img.classList.add('country-image');
+      canvas_name.innerHTML = 'Lap Times ' + data.MRData.RaceTable.Races[0].raceName;
+      canvas_name.appendChild(img);
+      console.log(laps);
+      showLapTimeCanvas(laps);
+    }
+
+    async function getCircuitsInfo(year) {
+      var completedCircuits = '';
+      var div_to_add = document.getElementById('circuit-result');
+
+      await fetch('https://ergast.com/api/f1/' + year + '/drivers/' + driverId + '/results.json')
+        .then(response => response.json())
+        .then(data => {
+
+          let results = data.MRData.RaceTable.Races;
+          console.log(results);
+          results.map(function (result) {
+            let position = result.Results[0].position;
+            let country = result.Circuit.Location.country;
+            let img = document.createElement('img');
+            img.src = 'https://cdn.countryflags.com/thumbs/' + country.toLowerCase().replace(/ /g, '-') + '/flag-400.png';
+            img.classList.add('country-image');
+            let span = document.createElement('span');
+            span.classList.add('position-text');
+            span.textContent = position + 'º';
+            span.appendChild(img);
+
+            div_to_add.appendChild(span);
+            console.log(position + country);
+
+          });
+        });
+    }
+
+    async function getDriverInfo(driverId) {
+
+      const response = await fetch('https://ergast.com/api/f1/drivers/' + driverId + '.json');
+      const data = await response.json();
+      if (data.MRData.DriverTable.Drivers.length > 0) {
+        return data.MRData.DriverTable.Drivers[0];
+      }
+      else { return false; }
+
+    }
+
+    async function driverStandings() {
+      const response = await fetch('https://ergast.com/api/f1/current/driverStandings.json');
+      const data = await response.json();
+      if (data.MRData.StandingsTable.StandingsLists[0].DriverStandings.length > 0) {
+        return data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
+      }
+      else { return false; }
+
+    }
+
+    function setLapAverageTime(data) {
+      // Calculate the sum of all lap times
+      let sum = 0;
+      for (let key in data) {
+        sum += parseFloat(data[key]);
+      }
+      // Calculate the average lap time
+      let avg = sum / Object.keys(data).length;
+      // Convert the average lap time to m:s.SSS format
+      let minutes = Math.floor(avg / 60);
+      let seconds = avg % 60;
+      let formattedAvg = `${minutes}:${seconds.toFixed(3)}`;
+      let div = document.getElementById('average-time');
+      div.innerHTML = formattedAvg;
+    }
+
+    function setFastestLap(data) {
+      // Find the minimum lap time
+      let min = Infinity;
+      for (let key in data) {
+        if (parseFloat(data[key]) < min) {
+          min = parseFloat(data[key]);
+        }
+      }
+      // Convert the minimum lap time to m:s.SSS format
+      let minutes = Math.floor(min / 60);
+      let seconds = min % 60;
+      let formattedMin = `${minutes}:${seconds.toFixed(3)}`;
+      let div = document.getElementById('fast-time');
+      div.innerHTML = formattedMin;
+    }
+
+
+
+    async function processDataToCanvas(data) {
+      const positionGraphic = document.getElementById("positionGraphic");
+      const ctx = positionGraphic.getContext("2d");
+      const positions = [];
+      const points = [];
+      let color = [];
+      let border = [];
+      let barThickness = [];
+      let teamsColors = colors();
+      console.log(teamsColors);
+
+      for (let i = 1; i <= data.length; i++) {
+        driverPos = data.find(data => data.position === i.toString());
+        driverColor = teamsColors.find(teamsColors => teamsColors.team === data[i - 1].Constructors[0].constructorId).color;
+        positions.push(i.toString() + ' - ' + driverPos.Driver.driverId);
+        points.push(driverPos.points);
+        color.push(driverColor);
+        if (driverId == data[i - 1].Driver.driverId) {
+          document.getElementById('pos').innerHTML = data[i - 1].position;
+          document.getElementById('piloto').innerHTML = data[i - 1].Driver.givenName + ' ' + data[i - 1].Driver.familyName;
+          document.getElementById('victorias').innerHTML = data[i - 1].wins;
+          document.getElementById('fabricante').innerHTML = data[i - 1].Constructors[0].constructorId.replace(/_/g, " ");
+          document.getElementById('puntos').innerHTML = data[i - 1].points;
+          document.getElementById("hero-container").style.backgroundColor = driverColor;
+          document.getElementById("driver-stats").style.backgroundColor = driverColor;
+          border.push(2);
+          barThickness.push(16);
+          console.log(driverColor);
+          driverColorSelected = driverColor;
+        } else { border.push(0); }
+      }
+
+      /* bar chart */
+      if (positionGraphic) {
+        new Chart(positionGraphic, {
+          type: 'bar',
+          data: {
+            labels: positions,
+            datasets: [{
+              data: points,
+              backgroundColor: color,
+              borderWidth: border,
+              borderColor: '#9f9f9f',
+              barThickness: barThickness,
+            }]
+          },
+
+          options: {
+            responsive: true,
+            scales: {
+              x: {
+                ticks: {
+                  display: false // oculta las etiquetas del eje X
+                },
+              },
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true
+                }
+              }]
+            },
+            tooltips: {
+              callbacks: {
+                label: function (tooltipItem) {
+                  return tooltipItem.yLabel;
+                }
+              }
+            },
+            plugins: {
+              legend: {
+                display: false,
+              },
+            },
+          }
+        });
+      }
+    }
+
+    async function showLapTimeCanvas(lapTimes) {
+
+
+      var ctx = document.getElementById("last-gp-times").getContext('2d');
+      var labels = [];
+      var laptime = [];
+      var position = [];
+
+      for (let i = 0; i < lapTimes.length; i++) {
+        labels.push(lapTimes[i].number + '-' + lapTimes[i].Timings[0].time);
+        laptime.push(lapTimes[i].Timings[0].time);
+        position.push(lapTimes[i].Timings[0].position);
+      }
+
+      console.log(laptime);
+      let labels1 = laptime.map((time, index) => `Vuelta ${index + 1}`);
+      let data = laptime.map(time => {
+        let [minutes, seconds] = time.split(':');
+        return (parseFloat(minutes) * 60 + parseFloat(seconds)).toFixed(3);
+      });
+
+      setLapAverageTime(data);
+      setFastestLap(data);
+
+      let chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels1,
+          datasets: [{
+            label: 'Last GP Times',
+            data: data,
+            borderColor: '#b9b9b9',
+            backgroundColor: driverColorSelected,
+            fill: true,
+          }]
+        },
+        options: {
+          plugins: {
+            legend: {
+              display: false
+            }
+          }
+        }
+      });
+    }
+
+    function colors() {
+      let colors = [
+        {
+          "team": "mercedes",
+          "color": "#00D2BE"
+        },
+        {
+          "team": "ferrari",
+          "color": "#DC0000"
+        },
+        {
+          "team": "red_bull",
+          "color": "#0600EF"
+        },
+        {
+          "team": "alpine",
+          "color": "#0090FF"
+        },
+        {
+          "team": "haas",
+          "color": "rgb(194 194 194)"
+        },
+        {
+          "team": "aston_martin",
+          "color": "#006F62"
+        },
+        {
+          "team": "alphatauri",
+          "color": "#2B4562"
+        },
+        {
+          "team": "mclaren",
+          "color": "#FF8700"
+        },
+        {
+          "team": "alfa",
+          "color": "#900000"
+        },
+        {
+          "team": "williams",
+          "color": "#005AFF"
+        }
+      ];
+      return colors;
+    }
+
+
+
+    function getAge(dateString) {
+      let today = new Date();
+      let birthDate = new Date(dateString);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      let monthDifference = today.getMonth() - birthDate.getMonth();
+      if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age;
+    }
+
+    //fotos https://soymotor.com/sites/default/files/2023-03/max-verstappen-2023.png
+  </script>
+  <!-- Agregamos los scripts de jQuery y Bootstrap -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>

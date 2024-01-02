@@ -1,0 +1,92 @@
+@font-face {
+    font-family: 'Formula1-Regular';
+    src: url('./fonts/Formula1-Regular.ttf') format('truetype');
+
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Raleway:ital,wght@0,200;0,300;1,600&family=Roboto:ital,wght@0,400;0,700;1,400&display=swap');
+
+/* Estilos CSS para la tabla */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent !important;
+    color: #fff !important;
+}
+
+.card{
+    font-family: 'Formula1-Regular', sans-serif;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.1rem;
+    background-color: #343a40 !important;
+    border-color: #454d55 !important;
+    color: white !important;
+    line-height: 28px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.image-gp {
+    width: 32px;
+    margin-left: 5px;
+    text-align: center !important;
+}
+
+th,
+td {
+    padding: 0.75rem;
+    vertical-align: middle !important;
+    border-top: 1px solid #dee2e6 !important;
+}
+
+td {
+    font-family: 'Roboto', sans-serif;
+}
+
+th {
+    font-family: 'Formula1-Regular', sans-serif;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.1rem;
+    background-color: #343a40 !important;
+    border-color: #454d55 !important;
+    color: white !important;
+    line-height: 28px;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+table td {
+    color: #000 !important;
+}
+
+.title-standigs {
+    text-align: center !important;
+    font-family: 'Roboto', sans-serif;
+    margin-top: 100px;
+    font-size: 30px;
+    font-weight: normal;
+}
+
+th span {
+    vertical-align: middle !important;
+}
+
+th img {
+    vertical-align: middle !important;
+}
+
+@media(max-width: 768px){
+    .twitter-widget.twitter-widget-header {
+        display: none;
+    }
+}

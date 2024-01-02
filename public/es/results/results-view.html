@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Carreras de F1 de la temporada actual</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Consulta aquí el calendario de carreras de Fórmula 1 2023, con los horarios, resultados, clasificaciones y toda la información sobre los pilotos y las escuderías.">
+	<title>Calendario de carreras de Fórmula 1 2023 | Horarios, resultados, pilotos, clasificaciones</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="../../styles/style.css">
+	<link rel="stylesheet" href="../../styles/results.css">
+	<style>
+		.card {
+			margin: 10px;
+			box-shadow: 0 0.25rem 1.75rem rgba(0, 0, 0, 0.1);
+			transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+		}
+
+		.card:hover {
+			transform: translateY(-0.5rem);
+			box-shadow: 0 1rem 1.2rem rgba(255, 0, 0, 0.559);
+		}
+
+		.card img {
+			height: 200px;
+			object-fit: cover;
+		}
+
+		.card-title {
+			font-size: 1.5rem;
+			margin-bottom: 0;
+			color: #000;
+			font-weight: bold;
+		}
+
+		.card-text {
+			margin-bottom: 0;
+			color: #000;
+		}
+
+		.completed {
+			background-color: #6f42c1;
+			color: white;
+		}
+
+		.card-body {
+			padding: 0.75rem 1.25rem;
+			background-color: #fff;
+			border-bottom-left-radius: inherit;
+			border-bottom-right-radius: inherit;
+		}
+	</style>
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow">
+		<a class="navbar-brand " href="../index.html">
+			<div class="d-flex align-items-center">
+				<img src="../../img/icon-1.png" style="width: 80px; height: 60px;">
+			</div>
+		</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+			aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse mx-3" id="navbarNav">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="../index.html">Inicio</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="./results.html">Resultados</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="./results-view.html">Programación</a>
+				  </li>
+				<li class="nav-item">
+					<a class="nav-link" href="../stats/stats2023.html">Estadísticas</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="../drivers/drivers.html">Pilotos</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Equipos</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<div class="twitter-widget twitter-widget-header">
+		<button onclick="toggleTwitterWidget()">▼</button>
+		<a class="twitter-timeline span-twitter" href="https://twitter.com/alonsoIngenier0?ref_src=twsrc%5Etfw">Tweets by
+		  el ingeniero de alonso</a>
+		<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+	
+	  </div>
+	  <div class="twitter-widget-minimize" onclick="toggleTwitterWidget()">
+		<div class="twitter-widget-header">
+		  <img src="https://abs.twimg.com/icons/apple-touch-icon-192x192.png" alt="Twitter logo" width="24" height="24">
+		  <span class="span-twitter">Tweets by @alonsoIngenier0</span>
+		  <button onclick="toggleTwitterWidget()">▲</button>
+		</div>
+	  </div>
+
+	<script>
+		function toggleTwitterWidget() {
+			var widget = document.querySelector('.twitter-widget');
+			var widget_minimize = document.querySelector('.twitter-widget-minimize');
+			if (widget.style.display === 'none') {
+				widget_minimize.style.display = 'none';
+				widget.style.display = 'block';
+			} else {
+				widget_minimize.style.display = 'block';
+				widget.style.display = 'none';
+			}
+		}
+	</script>
+
+	<style>
+		.span-twitter {
+			font-size: 14px;
+			font-weight: bold;
+			font-family: 'Formula1-Regular';
+		}
+
+		@media(max-width: 768px){
+			.twitter-widget.twitter-widget-header {
+				display: none;
+			}
+		}
+
+		@media (min-width: 768px) {
+			.twitter-widget-header button {
+				background-color: transparent;
+				border: none;
+				box-shadow: none;
+				font-size: large;
+				line-height: normal;
+				text-align: center;
+				cursor: pointer;
+				transition-duration: .2s;
+				position: absolute;
+				top: 0;
+				right: 0px;
+			}
+
+			.twitter-widget-minimize {
+				background-color: rgb(255, 255, 255);
+				display: none;
+				position: fixed;
+				bottom: 0;
+				right: 0;
+				z-index: 9999;
+				box-shadow: 0px 0px 10px black;
+				width: 400px;
+				height: 30px;
+				overflow-y: scroll;
+				border-radius: 10px 10px 0px 0px;
+			}
+
+			.twitter-widget {
+				position: fixed;
+				bottom: 0;
+				right: 10px;
+				z-index: 9999;
+				box-shadow: 0px 0px 10px black;
+				width: 400px;
+				height: 350px;
+				overflow-y: scroll;
+				border-radius: 10px 10px 0px 0px;
+
+			}
+
+			.twitter-widget iframe {
+				border-radius: 10px 10px 0px 0px;
+				overflow-y: scroll !important;
+				-webkit-overflow-scrolling: touch !important;
+				height: calc(100% - 20px);
+				width: calc(100% - 20px);
+				border: none !important;
+
+			}
+
+			::-webkit-scrollbar {
+				display: none;
+			}
+		}
+	</style>
+	<div class="container">
+		<h1 class="text-center" style="margin-top: 100px !important; font-family: 'Montserrat', sans-serif; color:rgb(84, 84, 84); font-size: 30px !important">Carreras F1 temporada actual 2023</h1>
+		<div class="row row-cols-1 row-cols-md-2" id="race-list">
+			<!-- Aquí es donde se mostrarán las tarjetas de carreras -->
+		</div>
+	</div>
+
+	<script>
+		$(document).ready(function () {
+			var season = "current";
+
+			// Realizar una solicitud GET a la API de Ergast para obtener la lista de carreras de la temporada actual
+			$.get(`https://ergast.com/api/f1/${season}/races.json?limit=100&offset=0`, function (data) {
+				// Iterar sobre cada carrera y mostrarla en una tarjeta de Bootstrap
+				var races = data.MRData.RaceTable.Races;
+				$.each(races, function (index, race) {
+					// Comparar la fecha y hora de la carrera con la fecha y hora actual
+					var currentDate = new Date();
+					var raceDate = new Date(`${race.date}T${race.time}`);
+					var formattedDate = raceDate.getDate() + '-' + (raceDate.getMonth() + 1) + '-' + raceDate.getFullYear();
+					var completed = raceDate < currentDate;
+					var cardClass = completed ? "card completed" : "card";
+					var cardContent = `
+						<h2 class="card-title">${race.raceName}</h2>
+						<p class="card-text">${completed ? "Completada &#x2705;" : `Fecha: ${formattedDate} &#x23F0;`}</p>
+					`;
+					var raceCard = `
+					<div class="col">
+						<div class="${cardClass}" onclick="location.href='./results-circuit.html?circuit=${encodeURIComponent(race.Circuit.circuitName)}&round=${encodeURIComponent(race.round)}';">
+							<img src="https://media.formula1.com/content/dam/fom-website/races/2023/${race.raceName.replace(/\s+/g, '_')}.png" class="card-img-top" alt="${race.raceName}" onerror="this.onerror=null; this.src='https://images6.alphacoders.com/112/thumb-1920-1120089.jpg'">
+							<div class="card-body">
+							${cardContent}
+							</div>
+						</div>
+					</div>
+					`;
+					$("#race-list").append(raceCard);
+				});
+			});
+		});
+	</script>
+</body>
+
+</html>
