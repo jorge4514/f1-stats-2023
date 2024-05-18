@@ -21,7 +21,7 @@
   - HTML5
   - CSS3
   - JavaScript (ES6+)
-  - 
+    
 - **Backend:**
   - Firebase (Hosting y base de datos en tiempo real)
 - **APIs:**
